@@ -12,7 +12,7 @@ app.get('/data', (req, res) => {
       res.status(500).send('Error reading database file');
     } else {
       res.setHeader('Content-Type', 'application/json');
-      res.send(data);
+      res.send(data.user);
     }
   });
 });
