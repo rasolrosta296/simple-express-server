@@ -1,8 +1,12 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const bodyParser = require('body-parser'); // Import body-parser
+const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const app = express();
+
+const SECRET_KEY = crypto.randomBytes(64).toString('hex'); // Generate secret key
 
 app.use(bodyParser.json()); // Use body-parser middleware
 
@@ -70,14 +74,33 @@ app.post('/login', (req, res) => {
     const user = db.user.find(u => u.username === username && u.password === password);
 
     if (user) {
-      res.status(200).send('Login successful');
+      const token = jwt.sign({ id: user.id, username: user.username }, SECRET_KEY, { expiresIn: '1h' });
+      res.status(200).json({ message: 'Login successful', token });
     } else {
       res.status(401).send('Invalid username or password');
     }
   });
 });
 
-app.get('/post', (req, res) => {
+// Middleware to verify token
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.sendStatus(401); // No token provided
+  }
+
+  jwt.verify(token, SECRET_KEY, (err, user) => {
+    if (err) {
+      return res.sendStatus(403); // Invalid token
+    }
+    req.user = user;
+    next();
+  });
+};
+
+app.get('/post', authenticateToken, (req, res) => {
   const userId = parseInt(req.query.id);
 
   if (!userId) {
