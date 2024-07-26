@@ -53,6 +53,54 @@ app.post('/register', (req, res) => {
   });
 });
 
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  
+  if (!username || !password) {
+    return res.status(400).send('Username and password are required');
+  }
+
+  const filePath = path.join(__dirname, 'db.json');
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      return res.status(500).send('Error reading database file');
+    }
+
+    const db = JSON.parse(data);
+    const user = db.user.find(u => u.username === username && u.password === password);
+
+    if (user) {
+      res.status(200).send('Login successful');
+    } else {
+      res.status(401).send('Invalid username or password');
+    }
+  });
+});
+
+app.get('/post', (req, res) => {
+  const userId = parseInt(req.query.id);
+
+  if (!userId) {
+    return res.status(400).send('User ID is required');
+  }
+
+  const filePath = path.join(__dirname, 'db.json');
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      return res.status(500).send('Error reading database file');
+    }
+
+    const db = JSON.parse(data);
+    const user = db.user.find(u => u.id === userId);
+
+    if (user) {
+      res.status(200).json(user.posts);
+    } else {
+      res.status(404).send('User not found');
+    }
+  });
+});
+
 app.listen(3000, () => console.log('Server ready on port 3000.'));
 
 module.exports = app;
