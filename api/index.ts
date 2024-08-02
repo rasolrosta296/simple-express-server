@@ -35,7 +35,7 @@ app.post('/register', (req, res) => {
     const newUser = req.body;
 
     // Validate new user data (optional, add more checks as needed)
-    if (!newUser.name || !newUser.email || !newUser.username || !newUser.password) {
+    if (!newUser.name || !newUser.email || !newUser.password) {
       return res.status(400).send('Invalid user data');
     }
 
