@@ -1,7 +1,39 @@
 {
   "user": [
-    { "id": 1, "name": "Farshad Ramezani", "email": "farshad@gmail.com", "username": "farshad", "password": "farshad@123", "posts": [{"id": 1, "title": "Sample 1", "text": "I am sample 1"}] },
-    { "id": 2, "name": "Jane Doe", "email": "jane@example.com", "username": "jane", "password": "jane@123", "posts": [{"id": 1, "title": "Sample 1", "text": "I am sample 1"}] }
+    {
+      "id": 1,
+      "name": "Farshad Ramezani",
+      "email": "farshad@gmail.com",
+      "username": "farshad",
+      "password": "farshad@123",
+      "posts": [
+        {
+          "id": 1,
+          "title": "Sample 1",
+          "text": "I am sample 1"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Jane Doe",
+      "email": "jane@example.com",
+      "username": "jane",
+      "password": "jane@123",
+      "posts": [
+        {
+          "id": 1,
+          "title": "Sample 1",
+          "text": "I am sample 1"
+        }
+      ]
+    },
+    {
+      "name": "farshad2",
+      "email": "farshad@example.com",
+      "password": "farshad@123",
+      "username": "farshad23",
+      "id": 3
+    }
   ]
 }
-
