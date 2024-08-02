@@ -1,18 +1,21 @@
 const express = require("express");
+const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const dotenv = require("dotenv");
-
-dotenv.config(); // Load environment variables
+require("dotenv").config();
 
 const app = express();
-const SECRET_KEY =
-  process.env.SECRET_KEY || crypto.randomBytes(64).toString("hex"); // Fallback to a generated key if not provided
 
-app.use(bodyParser.json()); // Use body-parser middleware
+const SECRET_KEY = process.env.SECRET_KEY;
+
+// Use CORS middleware
+app.use(cors());
+
+// Use body-parser middleware
+app.use(bodyParser.json());
 
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
@@ -39,12 +42,7 @@ app.post("/register", (req, res) => {
     const newUser = req.body;
 
     // Validate new user data (optional, add more checks as needed)
-    if (
-      !newUser.name ||
-      !newUser.email ||
-      !newUser.password ||
-      !newUser.username
-    ) {
+    if (!newUser.name || !newUser.email || !newUser.password) {
       return res.status(400).send("Invalid user data");
     }
 
