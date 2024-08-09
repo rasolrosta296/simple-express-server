@@ -32,7 +32,7 @@ app.get("/data", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  const filePath = path.join("./", "db.json");
+  const filePath = path.join(__dirname, "db.json");
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
       console.error("Error reading the file:", err);
