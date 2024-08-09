@@ -34,6 +34,13 @@
       "password": "farshad@123",
       "username": "farshad23",
       "id": 3
+    },
+    {
+      "name": "farshad23",
+      "email": "farshad2@example.com",
+      "password": "farshad@123",
+      "username": "farshad231",
+      "id": 4
     }
   ]
 }
